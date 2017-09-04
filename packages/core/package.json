@@ -1,0 +1,16 @@
+{
+  "name": "alpha-serializer-core",
+  "version": "0.1.0",
+  "description": "Core classes",
+  "main": "compiled/index.js",
+  "types": "compiled/index.d.ts",
+  "scripts": {
+    "compile": "../../node_modules/.bin/tsc",
+    "test": "../../node_modules/.bin/mocha -r ts-node/register test/**/*Test.ts"
+  },
+  "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "predicates": "^2.0.0-rc1"
+  }
+}
