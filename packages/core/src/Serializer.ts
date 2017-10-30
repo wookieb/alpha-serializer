@@ -2,13 +2,8 @@ import {AdapterInterface} from "./Adapter";
 import Normalizer from "./Normalizer";
 
 export default class Serializer<T> {
-    constructor(private adapter: AdapterInterface<T>, private normalizer: Normalizer) {
-
-    }
-
     serialize(object: any): T {
-        const normalized = this.normalizer.normalize(object, this.adapter.ignoredNormalizations);
-        return this.adapter.serialize(object);
+        return this.adapter.serialize(object, this.normalizer);
     }
 
     deserialize(data: T): any {

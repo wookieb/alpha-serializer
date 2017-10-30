@@ -1,12 +1,15 @@
-import {Serializer} from 'alpha-serializer-core';
+import {AdapterInterface} from 'alpha-serializer-core';
 import msgpack = require('msgpack5');
 import {MessagePack} from "msgpack5";
 import BufferList = require("bl");
 
 export default class MsgPackSerializer implements Serializer<BufferList> {
 
-    constructor(private packer?: MessagePack, private customTypeStartNumber = 0x00) {
-
+    /**
+     * @param [packer] msgpack instance to use - by default new is created
+     * @param [customTypeStartNumber]
+     */
+    constructor(private packer: MessagePack = msgpack(), private customTypeStartNumber = 0x00) {
         if (!this.packer) {
             this.packer = msgpack();
         }

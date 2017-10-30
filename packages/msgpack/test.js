@@ -1,22 +1,30 @@
 const msgpack = require('msgpack5');
 
-const m = msgpack();
 
-m.register(0x00, Date, (d) => {
-    const buf = Buffer.alloc(8);
-    buf.writeDoubleBE(+d, 0);
-    return buf;
-}, (data) => {
-    return new Date(data.readDoubleBE(0))
-});
+class ExampleClass {
 
-
-const o = 120391241233;
-const tab = [];
-for (let i = 0; i < 100; i++) {
-    tab.push(o);
 }
 
+const object = new ExampleClass();
+object.prop = 'tesadgfasd';
+object.date = new Date();
 
-console.log(m.encode(tab).length);
-console.log(JSON.stringify(tab).length);
+Object.freeze(object);
+Object.freeze(object.date);
+
+const m = msgpack();
+
+m.register(0x00, ExampleClass, (o) => {
+    return m.encode(Object.assign({}, o));
+}, (o) => {
+    const data = m.decode(o);
+    return Object.assign(new ExampleClass(), data);
+});
+
+m.register(0x01, Date, (o) => {
+    return Buffer.from(o.toISOString(), 'utf8');
+}, (d) => {
+    return new Date(d.toString('utf8'));
+});
+
+console.log(m.decode(m.encode(object)));

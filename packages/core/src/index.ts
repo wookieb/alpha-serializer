@@ -1,1 +1,2 @@
-export {Serializer} from './Serializer';
+export const NORMALIZER = Symbol('alpha-normalizer');
+export const DENORMALIZER = Symbol('alpha-denormalizer');

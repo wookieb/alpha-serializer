@@ -16,6 +16,17 @@ class ExampleClass {
     }
 }
 
+function registerDateNormalizer(normalizer: Normalizer) {
+    normalizer.register(Date, 'Date', {
+        normalizer(d: Date) {
+            return d.toISOString();
+        },
+        denormalizer(data: string) {
+            return new Date(data);
+        }
+    });
+}
+
 describe('Normalizer', () => {
     let normalizer: Normalizer;
 
@@ -86,7 +97,7 @@ describe('Normalizer', () => {
         const normalized = {
             [NORMALIZED_TYPE_KEY]: 'ExampleClass',
             value: {
-                prop: faker.random.alphaNumeric()
+                prop: faker.random.alphaNumeric(10)
             }
         };
 
@@ -97,22 +108,44 @@ describe('Normalizer', () => {
     });
 
     it('nested custom normalization', () => {
-        normalizer.register(ExampleClass, 'ExampleClass');
-        normalizer.register(Date, 'Date', {
-            normalizer(d: Date) {
-                return d.toISOString();
-            },
-            denormalizer(data: string) {
-                return new Date(data);
+        normalizer.register(ExampleClass, 'ExampleClass', {
+            normalizer(data: ExampleClass) {
+                return {...data};
             }
         });
+
+        registerDateNormalizer(normalizer);
+
         const object = new ExampleClass();
         object.date = new Date();
-        object.prop = faker.random.alphaNumeric();
+        object.prop = faker.random.alphaNumeric(10);
 
-        const result = normalizer.denormalize(normalizer.normalize(object));
+        const normalized = JSON.parse(JSON.stringify(normalizer.normalize(object)));
+        const result = normalizer.denormalize(normalized);
 
+        assert.instanceOf(result, ExampleClass);
+        assert.instanceOf(result.date, Date);
+        assert.deepEqual(result, object);
+        assert.strictEqual(result.date.toISOString(), object.date.toISOString());
+    });
 
+    it('normalizing frozen objects', () => {
+        const object = new ExampleClass();
+        object.prop = faker.random.alphaNumeric(10);
+        object.date = new Date();
 
-    })
+        Object.freeze(object);
+
+        const result = JSON.parse(JSON.stringify(normalizer.normalize(object)));
+        assert.deepEqual(result, {
+            [NORMALIZED_TYPE_KEY]: 'ExampleClass',
+            value: {
+                prop: object.prop,
+                date: {
+                    [NORMALIZED_TYPE_KEY]: 'Date',
+                    value: object.date.toISOString()
+                }
+            }
+        });
+    });
 });
