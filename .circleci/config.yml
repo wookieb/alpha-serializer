@@ -7,6 +7,7 @@ defaults: &defaults
         name: Install deps
         command: |
           npm install
+          ./node_modules/.bin/lerna bootstrap
     - run:
         name: Compile
         command: |
