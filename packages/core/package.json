@@ -1,6 +1,6 @@
 {
   "name": "alpha-serializer",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Core classes",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
