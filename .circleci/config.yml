@@ -7,7 +7,7 @@ defaults: &defaults
         name: Install deps
         command: |
           npm install
-          lerna bootstrap
+          ./node_modules/.bin/lerna bootstrap
     - run:
         name: Test core
         working_directory: packages/core
