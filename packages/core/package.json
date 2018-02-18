@@ -1,5 +1,5 @@
 {
-  "name": "alpha-serializer-core",
+  "name": "alpha-serializer",
   "version": "0.1.0",
   "description": "Core classes",
   "main": "compiled/index.js",
