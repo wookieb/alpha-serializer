@@ -9,6 +9,10 @@ defaults: &defaults
           npm install
           ./node_modules/.bin/lerna bootstrap
     - run:
+        name: Compile
+        command: |
+          ./node_modules/.bin/lerna run compile
+    - run:
         name: Test core
         working_directory: packages/core
         command:
