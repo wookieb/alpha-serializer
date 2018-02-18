@@ -1,0 +1,38 @@
+version: 2
+
+defaults: &defaults
+  steps:
+    - checkout
+    - run:
+        name: Install deps
+        command: |
+          npm install
+          lerna bootstrap
+    - run:
+        name: Test core
+        working_directory: packages/core
+        command:
+          npm test -- --coverage --testResultsProcessor ./node_modules/jest-junit && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+
+jobs:
+  test_6:
+    docker:
+      image: node:6
+    environment:
+      - JEST_JUNIT_OUTPUT: ./test-results/core/node-6.xml
+    <<: *defaults
+
+  test_8:
+    docker:
+      image: node: 8
+    environment:
+      - JEST_JUNIT_OUTPUT: ./test-results/core/node-8.xml
+    <<: *defaults
+
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - test_6
+      - test_8

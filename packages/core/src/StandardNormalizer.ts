@@ -1,45 +1,11 @@
-import Normalizer from "./Normalizer";
+import {DataNormalizer} from "./DataNormalizer";
+import * as normalizations from './normalizations';
 
-export default class StandardNormalizer extends Normalizer {
+export class StandardNormalizer extends DataNormalizer {
     constructor() {
         super();
-
-
-        this._registerDate();
-        this._registerMap();
-        this._registerSet();
-    }
-
-    private _registerDate() {
-        this.register(Date, 'Date', {
-            normalizer(date: Date): string {
-                return date.toISOString();
-            },
-            denormalizer(input: string) {
-                return new Date(input);
-            }
-        });
-    }
-
-    private _registerMap() {
-        this.register(Map, 'Map', {
-            normalizer(map: Map<any, any>) {
-                return [...map];
-            },
-            denormalizer(input: [any, any][]) {
-                return new Map(input);
-            }
-        });
-    }
-
-    private _registerSet() {
-        this.register(Set, 'Set', {
-            normalizer(set: Set<any>) {
-                return [...set];
-            },
-            denormalizer(input: any[]) {
-                return new Set(input);
-            }
-        });
+        this.registerNormalization(normalizations.MAP);
+        this.registerNormalization(normalizations.SET);
+        this.registerNormalization(normalizations.DATE);
     }
 }

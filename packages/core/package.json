@@ -5,12 +5,29 @@
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
   "scripts": {
-    "compile": "../../node_modules/.bin/tsc",
-    "test": "../../node_modules/.bin/mocha -r ts-node/register test/**/*Test.ts"
+    "test": "../../node_modules/.bin/jest",
+    "compile": "rm -rf compiled && ../../node_modules/.bin/tsc"
   },
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "predicates": "^2.0.0-rc1"
+    "predicates": "^2.0.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "skipBabel": true
+      }
+    },
+    "mapCoverage": true,
+    "testEnvironment": "node",
+    "testRegex": "/tests/.*Test.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ]
   }
 }

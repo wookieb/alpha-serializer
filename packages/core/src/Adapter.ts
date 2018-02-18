@@ -1,9 +1,5 @@
-import Normalizer from "./Normalizer";
+export interface Adapter<T = any> {
+    serialize(data: any): T;
 
-export type NormalizationRef = Function | string;
-
-export interface AdapterInterface<T> {
-    serialize(object: any, normalizer: Normalizer): T;
-
-    deserialize(data: T, normalizer: Normalizer): any;
+    deserialize(data: T): any;
 }
