@@ -25,7 +25,7 @@ jobs:
   test_8:
     <<: *defaults
     docker:
-      image: node: 8
+      image: node:8
     environment:
       - JEST_JUNIT_OUTPUT: ./test-results/core/node-8.xml
 
