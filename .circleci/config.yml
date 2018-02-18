@@ -18,14 +18,14 @@ jobs:
   test_6:
     <<: *defaults
     docker:
-      image: node:6
+      - image: node:6
     environment:
       - JEST_JUNIT_OUTPUT: ./test-results/core/node-6.xml
 
   test_8:
     <<: *defaults
     docker:
-      image: node:8
+      - image: node:8
     environment:
       - JEST_JUNIT_OUTPUT: ./test-results/core/node-8.xml
 
