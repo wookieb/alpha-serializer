@@ -16,18 +16,19 @@ defaults: &defaults
 
 jobs:
   test_6:
+    <<: *defaults
     docker:
       image: node:6
     environment:
       - JEST_JUNIT_OUTPUT: ./test-results/core/node-6.xml
-    <<: *defaults
 
   test_8:
+    <<: *defaults
     docker:
       image: node: 8
     environment:
       - JEST_JUNIT_OUTPUT: ./test-results/core/node-8.xml
-    <<: *defaults
+
 
 
 workflows:
