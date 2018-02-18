@@ -1,12 +1,13 @@
 {
   "name": "alpha-serializer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Core classes",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
   "scripts": {
     "test": "../../node_modules/.bin/jest",
-    "compile": "rm -rf compiled && ../../node_modules/.bin/tsc"
+    "compile": "rm -rf compiled && ../../node_modules/.bin/tsc",
+    "prepublish": "npm run compile"
   },
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com>",
   "license": "MIT",
