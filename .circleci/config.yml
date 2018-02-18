@@ -12,7 +12,7 @@ defaults: &defaults
         name: Test core
         working_directory: packages/core
         command:
-          npm test -- --coverage --testResultsProcessor ../../node_modules/jest-junit && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+          npm test -- --coverage --testResultsProcessor ../../node_modules/jest-junit && cat ./coverage/lcov.info | ../../node_modules/.bin/coveralls
 
 jobs:
   test_6:
