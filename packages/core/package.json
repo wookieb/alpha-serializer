@@ -22,7 +22,6 @@
         "skipBabel": true
       }
     },
-    "mapCoverage": true,
     "testEnvironment": "node",
     "testRegex": "/tests/.*Test.ts$",
     "moduleFileExtensions": [
