@@ -27,6 +27,10 @@ describe('DataNormalizer', () => {
             assert.strictEqual(normalizer.normalize(Array.prototype.map), undefined);
         });
 
+        it('null', () => {
+            assert.strictEqual(normalizer.normalize(null), null);
+        });
+
         it('normalization of custom types', () => {
             const mapData: [number, string][] = [[1, 'test'], [2, 'foo'], [3, 'bar']];
             const map = new Map<any, any>(mapData);
@@ -145,6 +149,10 @@ describe('DataNormalizer', () => {
                     new Date(3000)
                 ])
             });
+        });
+
+        it('null', () => {
+            assert.strictEqual(normalizer.denormalize(null), null);
         });
 
         it('throws an error if normalization for given types is missing', () => {
