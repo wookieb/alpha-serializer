@@ -83,8 +83,11 @@ export class DataNormalizer {
     }
 
     private getNormalizationForObject(object: any) {
-        const clazz = Object.getPrototypeOf(object).constructor;
-        return this.clazzToNormalization.get(clazz);
+        const prototype = Object.getPrototypeOf(object);
+
+        if (prototype) {
+            return this.clazzToNormalization.get(prototype.constructor);
+        }
     }
 
     denormalize(data: any): any {
