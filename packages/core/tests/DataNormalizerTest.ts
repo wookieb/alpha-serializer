@@ -13,6 +13,33 @@ describe('DataNormalizer', () => {
         normalizer.registerNormalization(normalizations.DATE);
     });
 
+    describe('hasNormalization', () => {
+        it('not for primitives', () => {
+            assert.isFalse(normalizer.hasNormalization('string'));
+            assert.isFalse(normalizer.hasNormalization(undefined));
+            assert.isFalse(normalizer.hasNormalization(null));
+            assert.isFalse(normalizer.hasNormalization(1));
+        });
+
+        it('not for arrays as functions', () => {
+            assert.isFalse(normalizer.hasNormalization([]));
+            assert.isFalse(normalizer.hasNormalization(Array.isArray));
+        });
+
+        it('true for registered normalizations', () => {
+            assert.isTrue(normalizer.hasNormalization(new Map()));
+            assert.isTrue(normalizer.hasNormalization(new Set()));
+            assert.isTrue(normalizer.hasNormalization(new Date()));
+        });
+
+        it('false for objects without registered normalization', () => {
+            class Foo {}
+
+            assert.isFalse(normalizer.hasNormalization(new Foo()));
+            assert.isFalse(normalizer.hasNormalization({}));
+        })
+    });
+
     describe('normalization', () => {
         it('primitives', () => {
 

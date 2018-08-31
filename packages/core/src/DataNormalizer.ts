@@ -90,6 +90,21 @@ export class DataNormalizer {
         }
     }
 
+    /**
+     * Checks whether given value has any defined normalizations
+     * Primitives, functions and arrays are ignored
+     *
+     * @param value
+     * @returns {boolean}
+     */
+    hasNormalization(value: any) {
+        if (is.primitive(value) || is.function(value) || is.array(value)) {
+            return false;
+        }
+
+        return is.object(value) && !!this.getNormalizationForObject(value);
+    }
+
     denormalize(data: any): any {
         if (is.primitive(data)) {
             return data;
