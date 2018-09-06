@@ -26,7 +26,7 @@ describe('integration', () => {
         };
     }
 
-    describe.only('simple adapter', () => {
+    describe('simple adapter', () => {
         const serializer = new Serializer(globalNormalizer, new MsgpackAdapter());
         each(values).test('case %p', createTest(serializer));
     });
