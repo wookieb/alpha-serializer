@@ -8,7 +8,7 @@ export const MAP = new Normalization<Map<any, any>>(
     },
     (data: any[]) => {
         return new Map(data);
-    }
+    },
 );
 
 export const SET = new Normalization<Set<any>>(
@@ -19,7 +19,7 @@ export const SET = new Normalization<Set<any>>(
     },
     (data: any[]) => {
         return new Set(data);
-    }
+    },
 );
 
 export const DATE = new Normalization<Date>(
@@ -30,5 +30,5 @@ export const DATE = new Normalization<Date>(
     },
     (data: string) => {
         return new Date(data);
-    }
+    },
 );

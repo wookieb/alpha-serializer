@@ -30,12 +30,11 @@ describe('Serializable', () => {
         obj.prop = '1';
         obj.prop2 = 3;
 
-
         const normalized = normalization.normalizer(obj);
         const denormalized = normalization.denormalizer(
             JSON.parse(
-                JSON.stringify(normalized)
-            )
+                JSON.stringify(normalized),
+            ),
         );
         assert.instanceOf(denormalized, SimpleClass);
         assert.propertyVal(denormalized, 'prop', '1');
@@ -57,7 +56,7 @@ describe('Serializable', () => {
         @Serializable({
             normalizer(data: SimpleClass) {
                 return {mainProperty: data.mainProperty / 2};
-            }
+            },
         })
 
         class SimpleClass {
@@ -73,8 +72,8 @@ describe('Serializable', () => {
         const normalized = normalization.normalizer(obj);
         const denormalized = normalization.denormalizer(
             JSON.parse(
-                JSON.stringify(normalized)
-            )
+                JSON.stringify(normalized),
+            ),
         );
         assert.instanceOf(denormalized, SimpleClass);
         assert.propertyVal(denormalized, 'mainProperty', 2);
@@ -84,7 +83,7 @@ describe('Serializable', () => {
         @Serializable({
             denormalizer(data: any) {
                 return new SimpleClass(data.mainProperty * 2);
-            }
+            },
         })
         class SimpleClass {
             constructor(public readonly mainProperty: number) {
@@ -99,8 +98,8 @@ describe('Serializable', () => {
         const normalized = normalization.normalizer(obj);
         const denormalized = normalization.denormalizer(
             JSON.parse(
-                JSON.stringify(normalized)
-            )
+                JSON.stringify(normalized),
+            ),
         );
         assert.instanceOf(denormalized, SimpleClass);
         assert.propertyVal(denormalized, 'mainProperty', 8);
@@ -116,7 +115,7 @@ describe('Serializable', () => {
             },
             denormalizer(data: number) {
                 return new SimpleClass(data * 4);
-            }
+            },
         })
         class SimpleClass {
             constructor(public readonly mainProperty: number) {
@@ -131,8 +130,8 @@ describe('Serializable', () => {
         const normalized = normalization.normalizer(obj);
         const denormalized = normalization.denormalizer(
             JSON.parse(
-                JSON.stringify(normalized)
-            )
+                JSON.stringify(normalized),
+            ),
         );
         assert.instanceOf(denormalized, SimpleClass);
         assert.propertyVal(denormalized, 'mainProperty', 8);

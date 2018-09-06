@@ -15,25 +15,45 @@ defaults: &defaults
     - run:
         name: Test core
         working_directory: packages/core
+        environment:
+          - JEST_JUNIT_OUTPUT: /app_root/test-results/core/results.xml
         command:
-          npm test -- --coverage --testResultsProcessor ../../node_modules/jest-junit && cat ./coverage/lcov.info | ../../node_modules/.bin/coveralls
+          npm test -- --coverage --reporters="jest-junit" && cat ./coverage/lcov.info | ../../node_modules/.bin/coveralls
+
+    - run:
+        name: Test msgpack
+        working_directory: packages/msgpack-adapter
+        environment:
+          - JEST_JUNIT_OUTPUT: /app_root/test-results/msgpack-adapter/results.xml
+        command:
+          npm test -- --coverage --reporters="jest-junit" && cat ./coverage/lcov.info | ../../node_modules/.bin/coveralls
 
 jobs:
   test_6:
     <<: *defaults
     docker:
       - image: node:6
-    environment:
-      - JEST_JUNIT_OUTPUT: ./test-results/core/node-6.xml
 
   test_8:
     <<: *defaults
     docker:
       - image: node:8
-    environment:
-      - JEST_JUNIT_OUTPUT: ./test-results/core/node-8.xml
 
+  test_10:
+    <<: *defaults
+    docker:
+      - image: node:10
 
+  lint:
+    steps:
+      - run:
+          name: Install deps
+          command: |
+            npm install
+      - run:
+          name: Linter
+          command: |
+            ./node_modules/.bin/lerna run lint
 
 workflows:
   version: 2
@@ -41,3 +61,5 @@ workflows:
     jobs:
       - test_6
       - test_8
+      - test_10
+      - lint

@@ -1,7 +1,6 @@
 import {assert} from 'chai';
 import {JSONAdapter} from "../src/JSONAdapter";
 
-
 describe('JSONAdapter', () => {
 
     let adapter: JSONAdapter;
@@ -9,7 +8,7 @@ describe('JSONAdapter', () => {
     const DATA = {
         some: 'pseudo random',
         data: 1,
-        to: 'serialize'
+        to: 'serialize',
     };
 
     const DATA_AS_JSON = '{"some":"pseudo random","data":1,"to":"serialize"}';
@@ -28,5 +27,5 @@ describe('JSONAdapter', () => {
         const result = adapter.deserialize(DATA_AS_JSON);
 
         assert.deepEqual(result, DATA);
-    })
+    });
 });

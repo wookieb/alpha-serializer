@@ -22,13 +22,15 @@ describe('Serializer', () => {
 
     it('normalizer must be an instance of DataNormalizer', () => {
         assert.throws(() => {
-            new Serializer(<any>{}, ADAPTER);
+            // tslint:disable-next-line: no-unused-expression
+            new Serializer({} as any, ADAPTER);
         }, /Must be an instance of DataNormalizer/);
     });
 
     it('adapter must look like adapter (serializer, deserialize methods)', () => {
         assert.throws(() => {
-            new Serializer(NORMALIZER, <any>{});
+            // tslint:disable-next-line: no-unused-expression
+            new Serializer(NORMALIZER, {} as any);
         }, /Must be an object with properties: "serialize" \- a function, "deserialize" \- a function/);
     });
 
@@ -37,8 +39,8 @@ describe('Serializer', () => {
         const NORMALIZED_DATA = {just: 'fake', normalized: 'data'};
         const RESULT = 'serialization result';
 
-        (<sinon.SinonStub>normalizer.normalize).withArgs(DATA).returns(NORMALIZED_DATA);
-        (<sinon.SinonStub>adapter.serialize).withArgs(NORMALIZED_DATA).returns(RESULT);
+        (normalizer.normalize as sinon.SinonStub).withArgs(DATA).returns(NORMALIZED_DATA);
+        (adapter.serialize as sinon.SinonStub).withArgs(NORMALIZED_DATA).returns(RESULT);
 
         assert.strictEqual(serializer.serialize(DATA), RESULT);
     });
@@ -48,8 +50,8 @@ describe('Serializer', () => {
         const DESERIALIZED = {some: 'data'};
         const RESULT = {just: 'fake', denormalized: 'data'};
 
-        (<sinon.SinonStub>adapter.deserialize).withArgs(SERIALIZED).returns(DESERIALIZED);
-        (<sinon.SinonStub>normalizer.denormalize).withArgs(DESERIALIZED).returns(RESULT);
+        (adapter.deserialize as sinon.SinonStub).withArgs(SERIALIZED).returns(DESERIALIZED);
+        (normalizer.denormalize as sinon.SinonStub).withArgs(DESERIALIZED).returns(RESULT);
 
         assert.strictEqual(serializer.deserialize(SERIALIZED), RESULT);
     });

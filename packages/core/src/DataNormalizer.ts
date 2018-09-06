@@ -5,18 +5,22 @@ export const NORMALIZED_TYPE_KEY = '@type';
 
 export class DataNormalizer {
     private nameToNormalization: Map<string, Normalization> = new Map();
-    private clazzToNormalization: Map<Function, Normalization> = new Map();
+    private clazzToNormalization: Map<{ new(...args: any[]): any }, Normalization> = new Map();
 
-    registerNormalization(normalization: Normalization) {
+    public registerNormalization(normalization: Normalization) {
         this.nameToNormalization.set(normalization.name, normalization);
         this.clazzToNormalization.set(normalization.clazz, normalization);
     }
 
-    getNormalization(name: string) {
+    public getNormalization(name: string) {
         return this.nameToNormalization.get(name);
     }
 
-    normalize(data: any): any {
+    /**
+     * Normalizes data using registered normalizers.
+     * Some normalizations might be excluded (by adapters for example)
+     */
+    public normalize(data: any, excludedNormalizations?: string[]): any {
         if (is.primitive(data)) {
             return data;
         }
@@ -26,68 +30,30 @@ export class DataNormalizer {
         }
 
         if (is.array(data)) {
-            return Array.prototype.map.call(data, this.normalize, this);
+            return Array.prototype.map.call(data, (value: any) => this.normalize(value), this);
         }
 
         const normalization = this.getNormalizationForObject(data);
 
         if (normalization) {
+            if (excludedNormalizations && excludedNormalizations.indexOf(normalization.name) !== -1) {
+                return data;
+            }
             const normalized = normalization.normalizer(data);
             return {
                 [NORMALIZED_TYPE_KEY]: normalization.name,
                 value: is.primitive(normalized) ? normalized :
                     new Proxy(
                         this.getProxyTargetForNormalizedValue(normalized),
-                        this.createProxyHandlerForValue(normalized)
-                    )
-            }
+                        this.createProxyHandlerForValue(normalized),
+                    ),
+            };
         }
 
         return new Proxy(
             this.getProxyTargetForNormalizedValue(data),
-            this.createProxyHandlerForValue(data)
+            this.createProxyHandlerForValue(data),
         );
-    }
-
-    private getProxyTargetForNormalizedValue(value: any) {
-        if (Array.isArray(value)) {
-            return [];
-        }
-        return {}
-    }
-
-    private createProxyHandlerForValue(value: any) {
-        return {
-            getPrototypeOf() {
-                return Object.getPrototypeOf(value);
-            },
-            has(target: any, property: string | number) {
-                return property in value;
-            },
-            ownKeys() {
-                return Object.getOwnPropertyNames(value);
-            },
-            getOwnPropertyDescriptor(target: any, property: string | number) {
-
-                const descriptor = Object.getOwnPropertyDescriptor(value, property);
-                // make a property configurable
-                if (!descriptor.configurable) {
-                    return {...descriptor, configurable: true};
-                }
-                return descriptor;
-            },
-            get: (target: any, property: string | number) => {
-                return this.normalize(value[property]);
-            }
-        }
-    }
-
-    private getNormalizationForObject(object: any) {
-        const prototype = Object.getPrototypeOf(object);
-
-        if (prototype) {
-            return this.clazzToNormalization.get(prototype.constructor);
-        }
     }
 
     /**
@@ -97,7 +63,7 @@ export class DataNormalizer {
      * @param value
      * @returns {boolean}
      */
-    hasNormalization(value: any) {
+    public hasNormalization(value: any) {
         if (is.primitive(value) || is.function(value) || is.array(value)) {
             return false;
         }
@@ -105,7 +71,7 @@ export class DataNormalizer {
         return is.object(value) && !!this.getNormalizationForObject(value);
     }
 
-    denormalize(data: any): any {
+    public denormalize(data: any): any {
         if (is.primitive(data)) {
             return data;
         }
@@ -124,10 +90,56 @@ export class DataNormalizer {
         }
 
         const newValue: any = {};
+        // tslint:disable-next-line: forin
         for (const key in data) {
             newValue[key] = this.denormalize(data[key]);
         }
         return newValue;
+    }
+
+    private getProxyTargetForNormalizedValue(value: any) {
+        if (Array.isArray(value)) {
+            return [];
+        }
+        return {};
+    }
+
+    private createProxyHandlerForValue(value: any) {
+        return {
+            getPrototypeOf() {
+                return Object.getPrototypeOf(value);
+            },
+            has(target: any, property: string | number) {
+                return property in value;
+            },
+            ownKeys() {
+                return Object.getOwnPropertyNames(value);
+            },
+            getOwnPropertyDescriptor(target: any, property: string | number) {
+                const descriptor = Object.getOwnPropertyDescriptor(value, property);
+                // make a property configurable
+                if (!descriptor.configurable) {
+                    return {...descriptor, configurable: true};
+                }
+                return descriptor;
+            },
+            get: (target: any, property: string | number) => {
+                const val = value[property];
+                // usually functions are not serialized either so it's safe to return them
+                if (is.func(val)) {
+                    return val;
+                }
+                return this.normalize(val);
+            },
+        };
+    }
+
+    private getNormalizationForObject(object: any) {
+        const prototype = Object.getPrototypeOf(object);
+
+        if (prototype) {
+            return this.clazzToNormalization.get(prototype.constructor);
+        }
     }
 
     private getNormalizationForType(type: string) {

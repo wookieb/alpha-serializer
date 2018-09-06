@@ -13,15 +13,15 @@ describe('normalizations', () => {
         it('denormalization', () => {
             const data = JSON.parse(
                 JSON.stringify(
-                    normalization.normalizer(map)
-                )
+                    normalization.normalizer(map),
+                ),
             );
 
             const result = normalization.denormalizer(data);
             assert.instanceOf(result, Map);
             assert.sameDeepOrderedMembers(
                 Array.from(result),
-                Array.from(map)
+                Array.from(map),
             );
         });
     });
@@ -37,15 +37,15 @@ describe('normalizations', () => {
         it('denormalization', () => {
             const data = JSON.parse(
                 JSON.stringify(
-                    normalization.normalizer(set)
-                )
+                    normalization.normalizer(set),
+                ),
             );
 
             const result = normalization.denormalizer(data);
             assert.instanceOf(result, Set);
             assert.sameDeepOrderedMembers(
                 Array.from(result),
-                Array.from(set)
+                Array.from(set),
             );
         });
     });
@@ -61,12 +61,12 @@ describe('normalizations', () => {
         it('denormalization', () => {
             const result = normalization.denormalizer(
                 JSON.parse(
-                    JSON.stringify(normalization.normalizer(date))
-                )
+                    JSON.stringify(normalization.normalizer(date)),
+                ),
             );
 
             assert.instanceOf(result, Date);
             assert.strictEqual(result.getTime(), date.getTime());
-        })
-    })
+        });
+    });
 });

@@ -1,0 +1,26 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "jsRules": {},
+  "rules": {
+    "ordered-imports": false,
+    "quotemark": false,
+    "object-literal-sort-keys": false,
+    "eofline": false,
+    "interface-name": false,
+    "no-var-requires": false,
+    "max-classes-per-file": false,
+    "only-arrow-functions": false,
+    "space-before-function-paren": [
+      true,
+      {
+        "anonymous": "always",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ]
+  },
+  "rulesDirectory": []
+}
