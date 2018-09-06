@@ -45,7 +45,10 @@ jobs:
       - image: node:10
 
   lint:
+    docker:
+      - image: node:8
     steps:
+      - checkout
       - run:
           name: Install deps
           command: |
