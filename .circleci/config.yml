@@ -29,11 +29,6 @@ defaults: &defaults
           npm test -- --coverage --reporters="jest-junit" && cat ./coverage/lcov.info | ../../node_modules/.bin/coveralls
 
 jobs:
-  test_6:
-    <<: *defaults
-    docker:
-      - image: node:6
-
   test_8:
     <<: *defaults
     docker:
