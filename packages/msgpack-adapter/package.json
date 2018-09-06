@@ -1,6 +1,6 @@
 {
   "name": "alpha-serializer-msgpack",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Msgpack adapter for alpha-serializer",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
