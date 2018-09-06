@@ -57,7 +57,6 @@ workflows:
   version: 2
   main:
     jobs:
-      - test_6
       - test_8
       - test_10
       - lint
