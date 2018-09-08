@@ -1,5 +1,6 @@
-import {Normalization} from "./Normalization";
+import {Normalization, NormalizationInput} from "./Normalization";
 import * as is from 'predicates';
+import {simpleDenormalizer, simpleNormalizer} from "./normalizerFactory";
 
 export const NORMALIZED_TYPE_KEY = '@type';
 
@@ -7,9 +8,20 @@ export class DataNormalizer {
     private nameToNormalization: Map<string, Normalization> = new Map();
     private clazzToNormalization: Map<{ new(...args: any[]): any }, Normalization> = new Map();
 
-    public registerNormalization(normalization: Normalization) {
+    public registerNormalization(normalizationInput: NormalizationInput) {
+        const normalization = this.normalizationInputToNormalization(normalizationInput);
         this.nameToNormalization.set(normalization.name, normalization);
         this.clazzToNormalization.set(normalization.clazz, normalization);
+    }
+
+    private normalizationInputToNormalization(input: NormalizationInput) {
+        is.assert(is.property('clazz', is.func), '"clazz" property is required and has to be a function');
+        return new Normalization(
+            input.name || input.clazz.name,
+            input.clazz,
+            input.normalizer ? input.normalizer : simpleNormalizer,
+            input.denormalizer ? input.denormalizer : simpleDenormalizer.bind(null, input.clazz)
+        );
     }
 
     public getNormalization(name: string) {

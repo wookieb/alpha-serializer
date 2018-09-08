@@ -1,12 +1,7 @@
-import {DenormalizerFunction, Normalization, NormalizerFunction} from "../Normalization";
+import {Normalization, NormalizationInput} from "../Normalization";
 import {DataNormalizer} from "../DataNormalizer";
-import {simpleDenormalizer, simpleNormalizer} from "../normalizerFactory";
 
-export interface SerializableOptions {
-    name?: string;
-    normalizer?: NormalizerFunction;
-    denormalizer?: DenormalizerFunction;
-}
+export type SerializableOptions = Pick<NormalizationInput, 'name' | 'normalizer' | 'denormalizer'>;
 
 export interface SerializableType {
     (options?: SerializableOptions): ClassDecorator;
@@ -21,8 +16,8 @@ export const Serializable = function (options: SerializableOptions = {}) {
         const normalization = new Normalization(
             (options && options.name) || target.name,
             target,
-            (options && options.normalizer) ? options.normalizer : simpleNormalizer,
-            (options && options.denormalizer) ? options.denormalizer : simpleDenormalizer.bind(null, target),
+            options.normalizer,
+            options.denormalizer
         );
         Serializable._dataNormalizer.registerNormalization(normalization);
     };

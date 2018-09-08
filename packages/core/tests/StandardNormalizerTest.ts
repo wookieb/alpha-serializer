@@ -8,8 +8,8 @@ describe('StandardNormalizer', () => {
         const normalizer = new StandardNormalizer();
 
         assert.instanceOf(normalizer, DataNormalizer);
-        assert.strictEqual(normalizer.getNormalization('Map'), normalizations.MAP);
-        assert.strictEqual(normalizer.getNormalization('Set'), normalizations.SET);
-        assert.strictEqual(normalizer.getNormalization('Date'), normalizations.DATE);
+        assert.deepEqual(normalizer.getNormalization('Map'), normalizations.MAP);
+        assert.deepEqual(normalizer.getNormalization('Set'), normalizations.SET);
+        assert.deepEqual(normalizer.getNormalization('Date'), normalizations.DATE);
     });
 });

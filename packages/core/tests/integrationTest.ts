@@ -1,4 +1,4 @@
-import {Serializer, globalNormalizer, JSONAdapter} from '../src';
+import {Serializer, normalizer, JSONAdapter} from '../src';
 import each from 'jest-each';
 
 describe('integration', () => {
@@ -26,7 +26,7 @@ describe('integration', () => {
     }
 
     describe('adapter', () => {
-        const serializer = new Serializer(globalNormalizer, new JSONAdapter());
+        const serializer = new Serializer(normalizer, new JSONAdapter());
         each(values).test('case %p', createTest(serializer));
     });
 });

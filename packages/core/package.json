@@ -4,6 +4,7 @@
   "description": "Configurable serializer with generic interface",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
+  "keywords": ["serializer", "json", "serialization", "custom serialization"],
   "scripts": {
     "test": "../../node_modules/.bin/jest",
     "compile": "rm -rf compiled && ../../node_modules/.bin/tsc",
@@ -12,6 +13,7 @@
   },
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com>",
   "license": "MIT",
+  "repository": "https://github.com/wookieb/alpha-serializer/tree/master/packages/core",
   "dependencies": {
     "predicates": "^2.0.0"
   },

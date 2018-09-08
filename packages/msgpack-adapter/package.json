@@ -4,6 +4,11 @@
   "description": "Msgpack adapter for alpha-serializer",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
+  "keywords": [
+    "serializer",
+    "msgpack",
+    "binary format"
+  ],
   "scripts": {
     "test": "../../node_modules/.bin/jest",
     "compile": "rm -rf compiled && ../../node_modules/.bin/tsc",
@@ -12,6 +17,7 @@
   },
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com>",
   "license": "MIT",
+  "repository": "https://github.com/wookieb/alpha-serializer/tree/master/packages/msgpack-adapter",
   "dependencies": {
     "msgpack5": "^4.2.0"
   },

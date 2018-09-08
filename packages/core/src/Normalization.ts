@@ -7,5 +7,8 @@ export class Normalization<T = any> {
     }
 }
 
+export type NormalizationInput = Partial<Pick<Normalization, 'name' | 'normalizer' | 'denormalizer'>>
+    & Pick<Normalization, 'clazz'>;
+
 export type NormalizerFunction<T = any> = (value: T) => any;
 export type DenormalizerFunction<T = any> = (value: any) => T;

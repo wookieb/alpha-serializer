@@ -13,6 +13,8 @@
     "no-var-requires": false,
     "max-classes-per-file": false,
     "only-arrow-functions": false,
+    "trailing-comma": false,
+    "member-ordering": false,
     "space-before-function-paren": [
       true,
       {

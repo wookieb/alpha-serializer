@@ -1,4 +1,4 @@
-import {Serializer, globalNormalizer} from 'alpha-serializer';
+import {Serializer, normalizer} from 'alpha-serializer';
 import {MsgpackAdapter} from "../src";
 import each from 'jest-each';
 
@@ -27,12 +27,12 @@ describe('integration', () => {
     }
 
     describe('simple adapter', () => {
-        const serializer = new Serializer(globalNormalizer, new MsgpackAdapter());
+        const serializer = new Serializer(normalizer, new MsgpackAdapter());
         each(values).test('case %p', createTest(serializer));
     });
 
     describe('adapter without timestamp encoding', () => {
-        const serializer = new Serializer(globalNormalizer, new MsgpackAdapter({
+        const serializer = new Serializer(normalizer, new MsgpackAdapter({
             disableTimestampEncoding: true,
         }));
         each(values).test('case %p', createTest(serializer));

@@ -13,9 +13,11 @@ export * from './Adapter';
 
 export {Serializable, StandardNormalizer, normalizations};
 
-export const globalNormalizer = new StandardNormalizer();
-Serializable.useDataNormalizer(globalNormalizer);
+export const normalizer = new StandardNormalizer();
+Serializable.useDataNormalizer(normalizer);
 
-export const serializer = new Serializer(globalNormalizer, new JSONAdapter());
+export const serializer = new Serializer(normalizer, new JSONAdapter());
 export const serialize = serializer.serialize.bind(serializer);
 export const deserialize = serializer.deserialize.bind(serializer);
+
+export const registerNormalization = normalizer.registerNormalization.bind(normalizer);
