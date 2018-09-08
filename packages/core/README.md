@@ -55,6 +55,12 @@ const s = serializer.serialize(new Date());
 serializer.deserialize(s);
 ```
 
+## Use cases
+_alpha-serializer_ is particularly usefull when you need to serialize:
+* Simple errors or errors with special properties
+* Value objects (for example ObjectId, Money or Date)
+* Maps, sets and other data structures
+
 ## More
 
 * [Serializer](./docs/serializer.md)
