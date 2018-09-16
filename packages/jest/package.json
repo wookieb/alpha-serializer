@@ -1,26 +1,30 @@
 {
-  "name": "alpha-serializer",
-  "version": "0.4.0",
-  "description": "Configurable serializer with generic interface",
+  "name": "alpha-serializer-jest",
+  "version": "0.1.0",
+  "description": "Snapshot serializer for jest with alpha-serializer",
   "main": "compiled/index.js",
-  "types": "compiled/index.d.ts",
-  "keywords": [
-    "serializer",
-    "json",
-    "serialization",
-    "custom serialization"
-  ],
   "scripts": {
     "test": "../../node_modules/.bin/jest",
     "compile": "rm -rf compiled && ../../node_modules/.bin/tsc",
     "prepublish": "npm run compile",
     "lint": "../../node_modules/.bin/tslint --format stylish 'src/**/*.ts' 'tests/**/*.ts'"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wookieb/alpha-serializer/tree/master/packages/jest"
+  },
+  "keywords": [
+    "serializer",
+    "jest",
+    "snapshot"
+  ],
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com>",
   "license": "MIT",
-  "repository": "https://github.com/wookieb/alpha-serializer/tree/master/packages/core",
-  "dependencies": {
-    "predicates": "^2.0.0"
+  "devDependencies": {
+    "alpha-serializer": "^0.4.0"
+  },
+  "peerDependencies": {
+    "alpha-serializer": "^0.3.0 || ^0.4.0"
   },
   "jest": {
     "transform": {
