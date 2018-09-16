@@ -18,7 +18,7 @@ Via global config
 }
 ```
 
-In your tests code
+Or in your tests code
 ```typescript
 const snapshotSerializer = require('alpha-serializer-jest');
 
