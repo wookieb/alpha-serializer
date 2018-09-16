@@ -27,14 +27,14 @@ describe('integration', () => {
     }
 
     describe('simple adapter', () => {
-        const serializer = new Serializer(normalizer, new MsgpackAdapter());
+        const serializer = new Serializer(new MsgpackAdapter(), normalizer);
         each(values).test('case %p', createTest(serializer));
     });
 
     describe('adapter without timestamp encoding', () => {
-        const serializer = new Serializer(normalizer, new MsgpackAdapter({
+        const serializer = new Serializer(new MsgpackAdapter({
             disableTimestampEncoding: true,
-        }));
+        }), normalizer);
         each(values).test('case %p', createTest(serializer));
     });
 });
