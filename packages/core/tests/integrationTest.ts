@@ -26,7 +26,7 @@ describe('integration', () => {
     }
 
     describe('adapter', () => {
-        const serializer = new Serializer(normalizer, new JSONAdapter());
+        const serializer = new Serializer(new JSONAdapter(), normalizer);
         each(values).test('case %p', createTest(serializer));
     });
 });

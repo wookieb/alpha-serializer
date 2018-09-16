@@ -46,5 +46,5 @@ If you really need it you can easily create your own instance of serializer and 
 ```javascript
 const {Serializer, normalizer, JSONAdapter} = require('alpha-serializer');
 
-const serializer = new Serializer(normalizer, new JSONAdapter);
+const serializer = new Serializer(new JSONAdapter, normalizer);
 ```

@@ -89,3 +89,15 @@ result instanceof Money; // true
 result.amount; // 100
 result.currency; // EUR
 ```
+
+## Disabling normalization
+If you really don't need normalization (for example because the adapter is able to handle all your custom types) you can disabled it.
+```typescript
+import {serializer, Serializer, JSONAdapter} from 'alpha-serializer';
+// disabling on global serializer
+
+serializer.normalizer = undefined;
+
+// disabling in local serializer
+const newSerializer = new Serializer(new JSONAdapter); // just omit last argument
+```

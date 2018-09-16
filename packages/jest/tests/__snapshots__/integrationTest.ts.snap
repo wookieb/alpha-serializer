@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`integration sanity 1`] = `
+Object {
+  "@type": "CustomType",
+  "value": "custom-type",
+}
+`;
+
+exports[`integration sanity 2`] = `
+Array [
+  Object {
+    "@type": "CustomType",
+    "value": "custom-type",
+  },
+]
+`;
+
+exports[`integration sanity 3`] = `
+Object {
+  "custom": Object {
+    "@type": "CustomType",
+    "value": "custom-type",
+  },
+  "some": "prop",
+}
+`;

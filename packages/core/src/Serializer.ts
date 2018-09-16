@@ -2,20 +2,20 @@ import {DataNormalizer} from "./DataNormalizer";
 import {Adapter} from "./Adapter";
 import * as is from 'predicates';
 
-export class Serializer<T = any> {
+export class Serializer<TTarget = any> {
     // tslint:disable-next-line: variable-name
     private _normalizer: DataNormalizer;
 
     // tslint:disable-next-line: variable-name
     private _adapter: Adapter;
 
-    constructor(normalizer: DataNormalizer, adapter: Adapter<T>) {
+    constructor(adapter: Adapter<TTarget>, normalizer?: DataNormalizer) {
         this.normalizer = normalizer;
         this.adapter = adapter;
     }
 
     set normalizer(normalizer: DataNormalizer) {
-        is.assert(is.instanceOf(DataNormalizer))(normalizer);
+        is.assert(is.undefinedOr(is.instanceOf(DataNormalizer)))(normalizer);
         this._normalizer = normalizer;
     }
 
@@ -36,11 +36,13 @@ export class Serializer<T = any> {
         return this._adapter;
     }
 
-    public serialize(data: any): T {
-        return this.adapter.serialize(this.normalizer.normalize(data));
+    public serialize(data: any): TTarget {
+        return this.adapter.serialize(this.normalizer ? this.normalizer.normalize(data) : data);
     }
 
-    public deserialize(data: T) {
-        return this.normalizer.denormalize(this.adapter.deserialize(data));
+    public deserialize(data: TTarget) {
+        const deserialized = this.adapter.deserialize(data);
+
+        return this.normalizer ? this.normalizer.denormalize(deserialized) : deserialized;
     }
 }

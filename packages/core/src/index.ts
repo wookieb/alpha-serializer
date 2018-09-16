@@ -16,7 +16,7 @@ export {Serializable, StandardNormalizer, normalizations};
 export const normalizer = new StandardNormalizer();
 Serializable.useDataNormalizer(normalizer);
 
-export const serializer = new Serializer(normalizer, new JSONAdapter());
+export const serializer = new Serializer(new JSONAdapter(), normalizer);
 export const serialize = serializer.serialize.bind(serializer);
 export const deserialize = serializer.deserialize.bind(serializer);
 

@@ -66,3 +66,4 @@ _alpha-serializer_ is particularly usefull when you need to serialize:
 * [Serializer](./docs/serializer.md)
 * [Normalizations](./docs/normalizations.md)
 * [Adapters](./docs/adapters.md)
+* [Integration with jest](../jest)
