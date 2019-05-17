@@ -1,8 +1,9 @@
 import {DataNormalizer} from "./DataNormalizer";
 import {Adapter} from "./Adapter";
 import * as is from 'predicates';
+import {SerializerInterface} from "./SerializerInterface";
 
-export class Serializer<TTarget = any> {
+export class Serializer<TTarget = any> implements SerializerInterface<TTarget> {
     // tslint:disable-next-line: variable-name
     private _normalizer: DataNormalizer;
 

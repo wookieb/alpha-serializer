@@ -10,6 +10,7 @@ export * from './Serializer';
 export * from './JSONAdapter';
 export * from './normalizerFactory';
 export * from './Adapter';
+export * from './SerializerInterface';
 
 export {Serializable, StandardNormalizer, normalizations};
 
