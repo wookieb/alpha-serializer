@@ -1,6 +1,6 @@
 {
   "name": "alpha-serializer-jest",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Snapshot serializer for jest with alpha-serializer",
   "main": "compiled/index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "alpha-serializer": "^0.4.0"
+    "alpha-serializer": "^0.4.1"
   },
   "peerDependencies": {
     "alpha-serializer": "^0.3.0 || ^0.4.0"
