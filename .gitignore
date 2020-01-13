@@ -1,6 +1,7 @@
 **/compiled/
 node_modules
 coverage
+browser
 .idea
 lerna-debug.log
 package-lock.json

@@ -6,6 +6,7 @@
     "sourceMap": true,
     "outDir": "compiled",
     "noImplicitAny": true,
+    "skipLibCheck": true,
     "moduleResolution": "node"
   },
   "include": [

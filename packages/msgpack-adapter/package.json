@@ -22,10 +22,10 @@
     "msgpack5": "^4.2.0"
   },
   "peerDependencies": {
-    "alpha-serializer": "^0.2.0"
+    "alpha-serializer": "*"
   },
   "devDependencies": {
-    "alpha-serializer": "^0.5.0"
+    "alpha-serializer": "*"
   },
   "jest": {
     "transform": {

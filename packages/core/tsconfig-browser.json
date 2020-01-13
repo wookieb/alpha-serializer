@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES2016",
+    "target": "es2015",
     "module": "commonjs",
     "declaration": true,
     "sourceMap": true,
     "outDir": "compiled",
     "noImplicitAny": true,
-    "moduleResolution": "node",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "moduleResolution": "node"
   },
   "include": [
     "src/*"

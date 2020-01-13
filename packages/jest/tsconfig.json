@@ -6,7 +6,9 @@
     "sourceMap": true,
     "outDir": "compiled",
     "noImplicitAny": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": false
   },
   "include": [
     "src/*"

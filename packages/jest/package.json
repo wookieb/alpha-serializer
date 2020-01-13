@@ -21,10 +21,10 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "alpha-serializer": "^0.5.0"
+    "alpha-serializer": "*"
   },
   "peerDependencies": {
-    "alpha-serializer": "^0.3.0 || ^0.4.0"
+    "alpha-serializer": "*"
   },
   "jest": {
     "transform": {
