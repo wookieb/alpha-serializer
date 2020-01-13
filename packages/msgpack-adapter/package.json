@@ -1,6 +1,6 @@
 {
   "name": "alpha-serializer-msgpack",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Msgpack adapter for alpha-serializer",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
@@ -25,7 +25,7 @@
     "alpha-serializer": "^0.2.0"
   },
   "devDependencies": {
-    "alpha-serializer": "^0.4.1"
+    "alpha-serializer": "^0.5.0"
   },
   "jest": {
     "transform": {

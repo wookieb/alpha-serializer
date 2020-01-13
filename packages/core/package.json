@@ -1,6 +1,6 @@
 {
   "name": "alpha-serializer",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Configurable serializer with generic interface",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
