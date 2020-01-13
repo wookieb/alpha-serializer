@@ -6,7 +6,7 @@ export const NORMALIZED_TYPE_KEY = '@type';
 
 export class DataNormalizer {
     private nameToNormalization: Map<string, Normalization> = new Map();
-    private clazzToNormalization: Map<{ new(...args: any[]): any }, Normalization> = new Map();
+    private clazzToNormalization: Map<new(...args: any[]) => any, Normalization> = new Map();
 
     constructor(public useProxy: boolean = true) {
     }

@@ -12,7 +12,7 @@ export interface SerializableType {
 }
 
 export const Serializable = function (options: SerializableOptions = {}) {
-    return function (target: { new(...args: any[]): any }) {
+    return function (target: new(...args: any[]) => any) {
         const normalization = new Normalization(
             (options && options.name) || target.name,
             target,

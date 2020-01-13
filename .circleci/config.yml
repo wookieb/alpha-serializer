@@ -49,7 +49,7 @@ jobs:
 
   lint:
     docker:
-    - image: node:8
+    - image: node:10
     steps:
     - checkout
     - run:
