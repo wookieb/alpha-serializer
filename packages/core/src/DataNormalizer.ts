@@ -8,6 +8,9 @@ export class DataNormalizer {
     private nameToNormalization: Map<string, Normalization> = new Map();
     private clazzToNormalization: Map<{ new(...args: any[]): any }, Normalization> = new Map();
 
+    constructor(public useProxy: boolean = true) {
+    }
+
     public registerNormalization(normalizationInput: NormalizationInput) {
         const normalization = this.normalizationInputToNormalization(normalizationInput);
         this.nameToNormalization.set(normalization.name, normalization);
@@ -54,18 +57,33 @@ export class DataNormalizer {
             const normalized = normalization.normalizer(data);
             return {
                 [NORMALIZED_TYPE_KEY]: normalization.name,
-                value: is.primitive(normalized) ? normalized :
-                    new Proxy(
-                        this.getProxyTargetForNormalizedValue(normalized),
-                        this.createProxyHandlerForValue(normalized),
-                    ),
+                value: is.primitive(normalized) ? normalized : this.internalNormalize(normalized)
             };
         }
 
+        return this.internalNormalize(data);
+    }
+
+    private internalNormalize(data: any) {
+        return this.useProxy ? this.normalizeWithProxy(data) : this.normalizeWithoutProxy(data);
+    }
+
+    private normalizeWithProxy(data: any) {
         return new Proxy(
             this.getProxyTargetForNormalizedValue(data),
             this.createProxyHandlerForValue(data),
         );
+    }
+
+    private normalizeWithoutProxy(data: any) {
+        if (Array.isArray(data)) {
+            return data.map((x: any) => this.normalize(x));
+        }
+        const result: any = {};
+        for (const key of Object.keys(data)) {
+            result[key] = this.normalize(data[key]);
+        }
+        return result;
     }
 
     /**

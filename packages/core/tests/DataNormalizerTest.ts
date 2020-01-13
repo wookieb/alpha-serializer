@@ -1,3 +1,4 @@
+/* tslint:disable:no-shadowed-variable */
 import {assert} from 'chai';
 import {DataNormalizer} from "../src/DataNormalizer";
 import * as normalizations from '../src/normalizations';
@@ -40,84 +41,101 @@ describe('DataNormalizer', () => {
     });
 
     describe('normalization', () => {
-        it('primitives', () => {
-
-            assert.strictEqual(normalizer.normalize(1), 1);
-            assert.strictEqual(normalizer.normalize('test'), 'test');
-            assert.strictEqual(normalizer.normalize(null), null);
-            assert.strictEqual(normalizer.normalize(undefined), undefined);
-            assert.strictEqual(normalizer.normalize(true), true);
-        });
-
-        it('functions always return undefined', () => {
-            assert.strictEqual(normalizer.normalize(Array.prototype.map), undefined);
-        });
-
-        it('null', () => {
-            assert.strictEqual(normalizer.normalize(null), null);
-        });
-
-        it('normalization of custom types', () => {
-            const mapData: Array<[number, string]> = [[1, 'test'], [2, 'foo'], [3, 'bar']];
-            const map = new Map<any, any>(mapData);
-
-            assert.deepEqual(normalizer.normalize(map), {
-                '@type': 'Map',
-                "value": mapData,
+        function runTests(normalizer: DataNormalizer) {
+            it('primitives', () => {
+                assert.strictEqual(normalizer.normalize(1), 1);
+                assert.strictEqual(normalizer.normalize('test'), 'test');
+                assert.strictEqual(normalizer.normalize(null), null);
+                assert.strictEqual(normalizer.normalize(undefined), undefined);
+                assert.strictEqual(normalizer.normalize(true), true);
             });
-        });
 
-        it('disabled normalization', () => {
-            const mapData: Array<[number, string]> = [[1, 'test'], [2, 'foo'], [3, 'bar']];
-            const map = new Map<any, any>(mapData);
+            it('functions always return undefined', () => {
+                assert.strictEqual(normalizer.normalize(Array.prototype.map), undefined);
+            });
 
-            assert.strictEqual(normalizer.normalize(map, ['Map']), map);
-        });
+            it('null', () => {
+                assert.strictEqual(normalizer.normalize(null), null);
+            });
 
-        it('normalization of frozen objects', () => {
-            const mapData: Array<[string, number]> = [['key', 2], ['key2', 4]];
-            const data = {prop: new Map(mapData)};
+            it('normalization of custom types', () => {
+                const mapData: Array<[number, string]> = [[1, 'test'], [2, 'foo'], [3, 'bar']];
+                const map = new Map<any, any>(mapData);
 
-            Object.freeze(data);
-
-            assert.deepEqual(normalizer.normalize(data), {
-                prop: {
+                assert.deepEqual(normalizer.normalize(map), {
                     '@type': 'Map',
                     "value": mapData,
-                },
+                });
             });
+
+            it('disabled normalization', () => {
+                const mapData: Array<[number, string]> = [[1, 'test'], [2, 'foo'], [3, 'bar']];
+                const map = new Map<any, any>(mapData);
+
+                assert.strictEqual(normalizer.normalize(map, ['Map']), map);
+            });
+
+            it('normalization of frozen objects', () => {
+                const mapData: Array<[string, number]> = [['key', 2], ['key2', 4]];
+                const data = {prop: new Map(mapData)};
+
+                Object.freeze(data);
+
+                assert.deepEqual(normalizer.normalize(data), {
+                    prop: {
+                        '@type': 'Map',
+                        "value": mapData,
+                    },
+                });
+            });
+
+            it('normalization of simple objects', () => {
+                const data = {
+                    prop1: 100,
+                    prop2: 'some random string',
+                    prop3: true,
+                    prop4: undefined,
+                    prop5: null,
+                };
+
+                assert.deepEqual(normalizer.normalize(data), data);
+            });
+
+            it('arrays', () => {
+                const data = [
+                    new Date(4000),
+                    new Date(2000),
+                    new Date(10000),
+                ];
+
+                assert.deepEqual(normalizer.normalize(data), [
+                    {'@type': 'Date', "value": '1970-01-01T00:00:04.000Z'},
+                    {'@type': 'Date', "value": '1970-01-01T00:00:02.000Z'},
+                    {'@type': 'Date', "value": '1970-01-01T00:00:10.000Z'},
+                ]);
+            });
+
+            it('simple arrays', () => {
+                const data = [1, 2, 'string', undefined, true, null];
+
+                assert.deepEqual(normalizer.normalize(data), data);
+            });
+        }
+
+        describe('with proxy', () => {
+            const normalizer = new DataNormalizer();
+            normalizer.registerNormalization(normalizations.MAP);
+            normalizer.registerNormalization(normalizations.SET);
+            normalizer.registerNormalization(normalizations.DATE);
+            runTests(normalizer);
         });
 
-        it('normalization of simple objects', () => {
-            const data = {
-                prop1: 100,
-                prop2: 'some random string',
-                prop3: true,
-                prop4: undefined,
-                prop5: null,
-            };
-
-            assert.deepEqual(normalizer.normalize(data), data);
-        });
-
-        it('arrays', () => {
-            const data = [
-                new Date(4000),
-                new Date(2000),
-                new Date(10000),
-            ];
-
-            assert.deepEqual(normalizer.normalize(data), [
-                {'@type': 'Date', "value": '1970-01-01T00:00:04.000Z'},
-                {'@type': 'Date', "value": '1970-01-01T00:00:02.000Z'},
-                {'@type': 'Date', "value": '1970-01-01T00:00:10.000Z'},
-            ]);
-        });
-
-        it('simple arrays', () => {
-            const data = [1, 2, 'string', undefined, true, null];
-
-            assert.deepEqual(normalizer.normalize(data), data);
+        describe('without proxy', () => {
+            const normalizer = new DataNormalizer(false);
+            normalizer.registerNormalization(normalizations.MAP);
+            normalizer.registerNormalization(normalizations.SET);
+            normalizer.registerNormalization(normalizations.DATE);
+            runTests(normalizer);
         });
     });
 
