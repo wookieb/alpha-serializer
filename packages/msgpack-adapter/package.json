@@ -25,7 +25,7 @@
     "alpha-serializer": "*"
   },
   "devDependencies": {
-    "alpha-serializer": "^0.5.5"
+    "alpha-serializer": "^0.5.*"
   },
   "jest": {
     "transform": {
@@ -43,5 +43,5 @@
       "js"
     ]
   },
-  "gitHead": "96daeae617f9f3dda2f3271b5fdeaa6fc07457d6"
+  "gitHead": "0f358397d4532dbab752ee8e92d9b416a98cefc5"
 }

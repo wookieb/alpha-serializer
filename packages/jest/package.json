@@ -21,7 +21,7 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "alpha-serializer": "^0.5.5"
+    "alpha-serializer": "^0.5.*"
   },
   "peerDependencies": {
     "alpha-serializer": "*"
@@ -42,5 +42,5 @@
       "js"
     ]
   },
-  "gitHead": "96daeae617f9f3dda2f3271b5fdeaa6fc07457d6"
+  "gitHead": "0f358397d4532dbab752ee8e92d9b416a98cefc5"
 }
