@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "target": "es5",
     "module": "commonjs",
     "declaration": true,
     "sourceMap": true,
-    "outDir": "compiled",
+    "outDir": "browser",
     "noImplicitAny": true,
+    "lib": [
+      "es2016"
+    ],
     "skipLibCheck": true,
     "moduleResolution": "node"
   },
