@@ -148,7 +148,7 @@ export class DataNormalizer {
             getOwnPropertyDescriptor(target: any, property: string | number) {
                 const descriptor = Object.getOwnPropertyDescriptor(value, property);
                 // make a property configurable
-                if (!descriptor.configurable) {
+                if (descriptor && !descriptor.configurable) {
                     return {...descriptor, configurable: true};
                 }
                 return descriptor;
